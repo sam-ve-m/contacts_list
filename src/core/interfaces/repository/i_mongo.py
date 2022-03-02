@@ -1,23 +1,36 @@
-from abc import ABC, abstractmethod
+from abc import ABC
+
+from pymongo import MongoClient
+from pymongo.errors import DuplicateKeyError
 
 
 class IMongo(ABC):
-    @abstractmethod
+    DATABASE: str
+    COLLECTION: str
+
+    def __init__(self, infrastructure: MongoClient):
+        connection = infrastructure
+        database = connection[self.DATABASE]
+        self.collection = database[self.COLLECTION]
+
     def insert_update_one(self, data: dict) -> bool:
-        pass
+        try:
+            if not self.collection.insert_one(data):
+                return False
+            return True
+        except DuplicateKeyError:
+            return False
 
-    @abstractmethod
     def find_all(self) -> list:
-        pass
+        return self.collection.find({})
 
-    @abstractmethod
     def find_one(self, identity: str) -> dict:
-        pass
+        return self.collection.find_one({"_id": identity})
 
-    @abstractmethod
     def aggregate(self, pipeline: list) -> dict:
         pass
 
-    @abstractmethod
     def delete_one(self, identity: str) -> bool:
-        pass
+        if not self.collection.find_one_and_delete({"_id": identity}):
+            return False
+        return True
