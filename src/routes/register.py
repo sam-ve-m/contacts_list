@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 
-app = FastAPI(openapi_prefix="/g3")
+router = FastAPI()
 
 
-@app.post("/register")
+@router.post("/register")
 def register_contact():
     pass
-
