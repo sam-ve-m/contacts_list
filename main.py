@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-app = FastAPI(openapi_prefix="/g3")
+from src.routes.register import register_route
 
-
-
+app = FastAPI()
+app.include_router(register_route)

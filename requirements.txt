@@ -2,3 +2,4 @@ pymongo~=4.0.1
 python-decouple
 pydantic~=1.8.2
 fastapi~=0.66.0
+redis~=3.5.3

@@ -16,7 +16,7 @@ class IMongo(ABC):
     def insert_update_one(self, data: dict) -> bool:
         try:
             if not self.collection.insert_one(data):
-                return False
+                return False                                    # TODO: Separate insert and update
             return True
         except DuplicateKeyError:
             return False
@@ -32,5 +32,5 @@ class IMongo(ABC):
 
     def delete_one(self, identity: str) -> bool:
         if not self.collection.find_one_and_delete({"_id": identity}):
-            return False
+            return False                                    # TODO: Introduce cache
         return True

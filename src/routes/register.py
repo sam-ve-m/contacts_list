@@ -1,8 +1,9 @@
 from fastapi import APIRouter
+from src.services.utils.env_config import config
 
-router = APIRouter()
+register_route = APIRouter(prefix=config("ROUTERS_PREFIX"))
 
 
-@router.post("/register")
+@register_route.get("/register")
 def register_contact():
     pass
