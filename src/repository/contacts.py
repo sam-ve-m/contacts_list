@@ -1,6 +1,6 @@
 from src.core.entities.contacts import Contact
 from src.core.interfaces.repository.i_mongo_repository import IMongo
-
+from typing import List
 
 class ContactsRepository(IMongo):
     DATABASE: str = "contact_list"
@@ -28,3 +28,6 @@ class ContactsRepository(IMongo):
             f"{contact.phoneList[0].number}"
         )
         return _id
+
+    def get_contacts_list(self) -> List[dict]:  # TODO: retornar tipo da classe Contact ao inves de dict, para o service manipular e retornar dict
+        return self.find_all()
