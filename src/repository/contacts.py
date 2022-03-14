@@ -28,3 +28,7 @@ class ContactsRepository(IMongo):
             f"{contact.phoneList[0].number}"
         )
         return _id
+
+    def contact_detail_find_one(self, identity: str) -> dict:
+        contact_detail = self.find_one(identity)
+        return contact_detail
