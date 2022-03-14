@@ -12,7 +12,7 @@ class MongoDBInfrastructure(IMongoDBInfrastructure):
             port=config("MONGO_PORT"),
             username: str = config("MONGO_USER"),
             password: str = config("MONGO_PASS")
-    ) -> any:
+    ) -> pymongo.MongoClient:
         try:
             host = f"mongodb://{username}:{password}@{url}:{port}"
             connection = pymongo.MongoClient(host)
@@ -27,7 +27,7 @@ class MongoDBInfrastructure(IMongoDBInfrastructure):
             port: int = config("MONGO_PORT"),
             username: str = config("MONGO_USER"),
             password: str = config("MONGO_PASS")
-    ) -> any:
+    ) -> pymongo.MongoClient:
         if cls.connection is None:
             cls.connection = cls.get_connection(url, port, username, password)
         return cls.connection

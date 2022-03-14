@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.routes.register import register_route
+from src.routes.register import route
 
 app = FastAPI()
-app.include_router(register_route)
+app.include_router(route)
