@@ -1,7 +1,7 @@
 import pymongo
 from redis.client import Redis
 
-from src.core.interfaces.infrastructure.i_redis import IRedisInfrastructure
+from src.core.interfaces.infrastructure.i_redis_infrastructure import IRedisInfrastructure
 from src.services.utils.env_config import config
 
 

@@ -1,4 +1,4 @@
-from src.core.interfaces.repository.i_redis import IRedis
+from src.core.interfaces.repository.i_redis_repository import IRedis
 
 
 class SoftDeleteRegisters(IRedis):

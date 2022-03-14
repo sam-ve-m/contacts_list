@@ -2,6 +2,6 @@ from enum import Enum
 
 
 class Status(Enum):
-    SUCCESS: int = 1001
-    ERROR: int = 1004
+    SUCCESS: str = "1001"
+    ERROR: str = "1004"
     

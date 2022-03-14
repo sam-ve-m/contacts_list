@@ -1,6 +1,6 @@
 import pymongo
 from src.services.utils.env_config import config
-from src.core.interfaces.infrastructure.i_mongo import IMongoDBInfrastructure
+from src.core.interfaces.infrastructure.i_mongo_infrastructure import IMongoDBInfrastructure
 
 
 class MongoDBInfrastructure(IMongoDBInfrastructure):

@@ -4,7 +4,7 @@ from typing import Type
 from redis.client import Redis
 from redis.exceptions import ConnectionError
 
-from src.core.interfaces.infrastructure.i_redis import IRedisInfrastructure
+from src.core.interfaces.infrastructure.i_redis_infrastructure import IRedisInfrastructure
 
 
 class IRedis(ABC):
