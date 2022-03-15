@@ -1,5 +1,5 @@
 from typing import List, Dict, Type
-
+from hashlib import md5
 from src.core.entities.address import Address
 from src.core.entities.contacts import Contact
 from src.core.entities.email import Email
@@ -33,7 +33,9 @@ class ContactsRepository(IMongo):
             f"{contact.email.email}:"
             f"{contact.phoneList[0].number}"
         )
-        return _id
+
+        return md5(_id.encode()).hexdigest()
+
 
     def get_contacts_list(self) -> List[Dict[str, Type[Contact]]]:
         list_of_contacts = self.find_all()
