@@ -1,6 +1,12 @@
+from typing import List, Dict, Type
+
+from src.core.entities.address import Address
 from src.core.entities.contacts import Contact
+from src.core.entities.email import Email
+from src.core.entities.name import Name
+from src.core.entities.phones import Phone
 from src.core.interfaces.repository.i_mongo_repository import IMongo
-from typing import List
+
 
 class ContactsRepository(IMongo):
     DATABASE: str = "contact_list"
@@ -29,5 +35,25 @@ class ContactsRepository(IMongo):
         )
         return _id
 
-    def get_contacts_list(self) -> List[dict]:  # TODO: retornar tipo da classe Contact ao inves de dict, para o service manipular e retornar dict
-        return self.find_all()
+    def get_contacts_list(self) -> List[Dict[str, Type[Contact]]]:
+        list_of_contacts = self.find_all()
+        list_of_contacts_return = []
+        for contact_as_json in list_of_contacts:
+            contact = Contact(
+                name=Name(
+                    full_name=contact_as_json.get('name')
+                ),
+                email=Email(
+                    email=contact_as_json.get('email')
+                ),
+                phoneList=[Phone(
+                    type=phone.get('type'),
+                    number=phone.get('number')
+                ) for phone in contact_as_json.get('phones')],
+                address=Address(
+                    full_address=contact_as_json.get('address')
+                )
+            )
+            list_of_contacts_return.append({'_id': contact_as_json.get('_id'), 'Contact': contact})
+
+        return list_of_contacts_return
