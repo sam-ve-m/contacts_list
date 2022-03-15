@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 
+from src.core.entities.contacts import Contact
 from src.core.enum.status import Status
 from src.repository.contacts import ContactsRepository
 
@@ -12,11 +13,11 @@ def lists_contacts_in_mongo(infrastructure: MongoClient) -> dict:
 
 
 def _contact_dict_to_json(dictionary: dict):
-    contact_in_dict = dictionary.get('Contact')
+    contact_in_dict: Contact = dictionary.get('Contact')
     contact = {
         "contactId": dictionary.get('_id'),
-        "firstName": contact_in_dict.contact.name,
-        "email": contact_in_dict.contact.email,
-        "phoneList": contact_in_dict.contact.phoneList
+        "firstName": contact_in_dict.name,
+        "email": contact_in_dict.email,
+        "phoneList": contact_in_dict.phoneList
     }
     return contact

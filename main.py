@@ -10,5 +10,5 @@ if __name__ == "__main__":
     uvicorn.run(
         app,
         host="localhost",
-        port=5555,
+        port=5556,
     )

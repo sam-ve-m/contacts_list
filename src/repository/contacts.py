@@ -36,7 +36,6 @@ class ContactsRepository(IMongo):
 
         return md5(_id.encode()).hexdigest()
 
-
     def get_contacts_list(self) -> List[Dict[str, Type[Contact]]]:
         list_of_contacts = self.find_all()
         list_of_contacts_return = []
