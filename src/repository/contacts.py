@@ -33,7 +33,6 @@ class ContactsRepository(IMongo):
             f"{contact.email.email}:"
             f"{contact.phoneList[0].number}"
         )
-
         return md5(_id.encode()).hexdigest()
 
     def get_contacts_list(self) -> List[Dict[str, Type[Contact]]]:
@@ -56,5 +55,9 @@ class ContactsRepository(IMongo):
                 )
             )
             list_of_contacts_return.append({'_id': contact_as_json.get('_id'), 'Contact': contact})
-
         return list_of_contacts_return
+        return _id
+
+    def contact_detail_find_one(self, identity: str) -> dict:
+        contact_detail = self.find_one(identity)
+        return contact_detail
