@@ -8,8 +8,8 @@ from src.core.interfaces.infrastructure.i_redis_infrastructure import IRedisInfr
 
 
 class IRedis(ABC):
-    def __init__(self, infrastructure: Type[IRedisInfrastructure]):
-        connection: Redis = infrastructure.get_singleton_connection()
+    def __init__(self, infrastructure: Redis):
+        connection: Redis = infrastructure
         self.connection = connection
 
     def insert(self, key: str) -> bool:

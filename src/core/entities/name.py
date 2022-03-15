@@ -2,4 +2,5 @@ from pydantic import BaseModel
 
 
 class Name(BaseModel):
-    full_name: str
+    firstName: str
+    lastName: str

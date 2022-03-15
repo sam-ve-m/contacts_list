@@ -2,12 +2,12 @@ from pymongo import MongoClient
 
 from src.core.entities.contacts import Contact
 from src.core.enum.status import Status
-from src.repository.contacts import ContactsRepository
+from src.repository.get_contact_list import GetContactListContactsRepository
 
 
 def lists_contacts_in_mongo(infrastructure: MongoClient) -> dict:
-    contacts_repository = ContactsRepository(infrastructure)
-    list_of_contacts = contacts_repository.get_contacts_list()
+    contacts_repository = GetContactListContactsRepository(infrastructure)
+    list_of_contacts = contacts_repository.get()
     list_of_contacts_return = [_contact_dict_to_json(dicti) for dicti in list_of_contacts]
     return {'ContactList': list_of_contacts_return, 'status': Status.SUCCESS.value}
 
