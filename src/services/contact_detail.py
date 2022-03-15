@@ -7,7 +7,7 @@ from src.core.enum.status import Status
 
 def display_contact_detail(_id: Contact, infrastructure: MongoClient) -> dict:
     contact_detail_repository = ContactsRepository(infrastructure)
-    contact_detail = contact_detail_repository.find_one(_id)
+    contact_detail = contact_detail_repository.contact_detail_find_one(_id)
     status_alias = {
         str(Status.SUCCESS.name).lower(): Status.SUCCESS.value
     }
