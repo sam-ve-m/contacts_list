@@ -3,6 +3,7 @@ from src.core.entities.contacts import Contact
 from src.core.entities.email import Email
 from src.core.entities.name import Name
 from src.core.entities.phones import Phone
+from src.core.enum.active import ActiveCondition
 from src.core.interfaces.repository.i_mongo_repository import IMongo
 
 
@@ -35,7 +36,7 @@ class ContactsRepository(IMongo):
     def _transform_from_contact_to_json(contact: Contact) -> dict:
         contact_as_json = {
             "_id": contact.contactId,
-            "active": True,
+            **ActiveCondition.ACTIVE.value,
             "firstName": contact.name.firstName,
             "lastName": contact.name.lastName,
             "email": contact.email.email,

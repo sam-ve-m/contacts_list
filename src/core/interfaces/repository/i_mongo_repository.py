@@ -27,8 +27,8 @@ class IMongo(ABC):
     def find_all(self, filter_fields: dict = {}) -> list:
         return self.collection.find(filter_fields)
 
-    def find_one(self, identity: str) -> dict:
-        return self.collection.find_one({"_id": identity})
+    def find_one(self, identity: str, filter_fields: dict = {}) -> dict:
+        return self.collection.find_one({"_id": identity, **filter_fields})
 
     def aggregate(self, pipeline: list) -> dict:
         pass
