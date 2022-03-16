@@ -1,15 +1,18 @@
 from pymongo import MongoClient
 
-from src.core.entities.contacts import Contact
 from src.core.enum.status import Status
+from src.core.entities.contacts import Contact
+from src.core.entities.contacts_parameters import ContactParameters
 from src.repository.register_a_contact import RegisterContactsRepository
+from src.services.utils.transform_parameters_to_contact import transform_parameters_to_contact
 
 
 def register_contact(
-        contact_parameters: Contact,
+        contact_parameters: ContactParameters,
         mongo_infrastructure: MongoClient,
 ) -> dict:
-    return _register_contact_in_mongo(contact_parameters, mongo_infrastructure)
+    contact = transform_parameters_to_contact(contact_parameters)
+    return _register_contact_in_mongo(contact, mongo_infrastructure)
 
 
 def _register_contact_in_mongo(contact: Contact, infrastructure: MongoClient):

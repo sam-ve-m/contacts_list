@@ -4,7 +4,6 @@ from src.core.entities.email import Email
 from src.core.entities.name import Name
 from src.core.entities.phones import Phone
 from src.core.interfaces.repository.i_mongo_repository import IMongo
-from src.repository.util.contact_id import create_id
 
 
 class ContactsRepository(IMongo):
@@ -14,6 +13,7 @@ class ContactsRepository(IMongo):
     @staticmethod
     def _transform_from_json_to_contact(contact_as_json: dict) -> Contact:
         contact = Contact(
+            contactId=contact_as_json.get("_id"),
             name=Name(
                 lastName=contact_as_json.get("lastName"),
                 firstName=contact_as_json.get("firstName"),
@@ -34,7 +34,7 @@ class ContactsRepository(IMongo):
     @staticmethod
     def _transform_from_contact_to_json(contact: Contact) -> dict:
         contact_as_json = {
-            "_id": create_id(contact),
+            "_id": contact.contactId,
             "firstName": contact.name.firstName,
             "lastName": contact.name.lastName,
             "email": contact.email.email,

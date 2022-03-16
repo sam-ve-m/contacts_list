@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.core.entities.contacts import Contact
+from src.core.entities.contacts_parameters import ContactParameters
 from src.infrastructure.mongo import MongoDBInfrastructure
 from src.services.contact_detail import display_contact_detail
 from src.services.lists_registers import lists_contacts_in_mongo
@@ -11,7 +11,7 @@ route = APIRouter(prefix=config("ROUTERS_PREFIX"))
 
 
 @route.post("/register")
-def register_contact_route(contact: Contact):
+def register_contact_route(contact: ContactParameters):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     register_return = register_contact(contact, mongo_connection)
     return register_return
@@ -20,12 +20,12 @@ def register_contact_route(contact: Contact):
 @route.get("/contacts")
 def lists_contacts():
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
-    return_list = lists_contacts_in_mongo(mongo_connection)
-    return return_list
+    contacts_list = lists_contacts_in_mongo(mongo_connection)
+    return contacts_list
 
 
 @route.get("/contact/{_id}")
 def contact_detail(_id: str):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
-    register_return = display_contact_detail(_id, mongo_connection)
-    return register_return
+    contact_details = display_contact_detail(_id, mongo_connection)
+    return contact_details

@@ -9,6 +9,7 @@ def display_contact_detail(_id: str, infrastructure: MongoClient) -> dict:
     contact_detail_repository = GetContactDetailsContactsRepository(infrastructure)
     contact_detail: Contact = contact_detail_repository.get(_id)
     contact_as_json = {
+        "contactId": contact_detail.contactId,
         "firstName": contact_detail.name.firstName,
         "lastName": contact_detail.name.lastName,
         "email": contact_detail.email.email,
@@ -19,4 +20,3 @@ def display_contact_detail(_id: str, infrastructure: MongoClient) -> dict:
         str(Status.SUCCESS.name).lower(): Status.SUCCESS.value,
     }
     return contact_as_json
-

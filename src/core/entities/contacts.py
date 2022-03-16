@@ -8,6 +8,7 @@ from src.core.entities.address import Address
 
 
 class Contact(BaseModel):
+    contactId: str
     name: Name
     email: Email
     address: Address
