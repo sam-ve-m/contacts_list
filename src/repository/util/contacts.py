@@ -35,6 +35,7 @@ class ContactsRepository(IMongo):
     def _transform_from_contact_to_json(contact: Contact) -> dict:
         contact_as_json = {
             "_id": contact.contactId,
+            "active": True,
             "firstName": contact.name.firstName,
             "lastName": contact.name.lastName,
             "email": contact.email.email,

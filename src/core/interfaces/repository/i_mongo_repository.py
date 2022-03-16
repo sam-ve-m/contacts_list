@@ -13,13 +13,16 @@ class IMongo(ABC):
         database = connection[self.DATABASE]
         self.collection = database[self.COLLECTION]
 
-    def insert_update_one(self, data: dict) -> bool:
+    def insert_one(self, data: dict) -> bool:
         try:
             if not self.collection.insert_one(data):
-                return False                                    # TODO: Separate insert and update
+                return False
             return True
         except DuplicateKeyError:
             return False
+
+    def update_one(self, identity: str, fields_to_update: dict) -> bool:
+        return self.collection.update_one({"_id": identity}, {"$set": fields_to_update})
 
     def find_all(self) -> list:
         return self.collection.find({})

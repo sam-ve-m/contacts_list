@@ -1,10 +1,12 @@
 from fastapi import APIRouter
 
 from src.core.entities.contacts_parameters import ContactParameters
+from src.core.interfaces.services.i_register import IRegister
 from src.infrastructure.mongo import MongoDBInfrastructure
+from src.infrastructure.redis import RedisKeyDBInfrastructure
 from src.services.contact_detail import display_contact_detail
 from src.services.lists_registers import lists_contacts_in_mongo
-from src.services.register import register_contact
+from src.services.register import RegisterContact
 from src.services.utils.env_config import config
 
 route = APIRouter(prefix=config("ROUTERS_PREFIX"))
@@ -13,7 +15,9 @@ route = APIRouter(prefix=config("ROUTERS_PREFIX"))
 @route.post("/register")
 def register_contact_route(contact: ContactParameters):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
-    register_return = register_contact(contact, mongo_connection)
+    redis_connection = RedisKeyDBInfrastructure.get_singleton_connection()
+    register_service: IRegister = RegisterContact(mongo_connection, redis_connection)
+    register_return = register_service.register(contact)
     return register_return
 
 
