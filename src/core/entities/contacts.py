@@ -1,15 +1,12 @@
-from typing import List
-from pydantic import BaseModel
-
+from src.core.entities.address import Address
 from src.core.entities.email import Email
 from src.core.entities.name import Name
-from src.core.entities.phones import Phone
-from src.core.entities.address import Address
+from src.core.entities.phones import PhoneList
 
 
-class Contact(BaseModel):
+class Contact(PhoneList):
     contactId: str
     name: Name
     email: Email
     address: Address
-    phoneList: List[Phone]
+

@@ -22,7 +22,8 @@ class IMongo(ABC):
             return False
 
     def update_one(self, identity: str, fields_to_update: dict) -> bool:
-        return self.collection.update_one({"_id": identity}, {"$set": fields_to_update})
+        update_result = self.collection.update_one({"_id": identity}, {"$set": fields_to_update})
+        return update_result.modified_count > 0
 
     def find_all(self, filter_fields: dict = {}) -> list:
         return self.collection.find(filter_fields)

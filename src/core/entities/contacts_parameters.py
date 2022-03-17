@@ -1,12 +1,15 @@
-from pydantic import BaseModel
-from typing import List
+from typing import Optional, List
 
-from src.core.entities.phones import Phone
+from pydantic import validator, BaseModel
+
+from src.core.entities.phones import Phone, assert_have_max_of_3
 
 
 class ContactParameters(BaseModel):
-    firstName: str
-    lastName: str
-    email: str
-    address: str
-    phoneList: List[Phone]
+    firstName: Optional[str] = None
+    lastName: Optional[str] = None
+    email: Optional[str] = None
+    address: Optional[str] = None
+    phoneList: Optional[List[Phone]] = None
+
+    _max_3_phones = validator('phoneList', allow_reuse=True)(assert_have_max_of_3)

@@ -4,11 +4,13 @@ from src.core.entities.contacts_parameters import ContactParameters
 from src.core.interfaces.services.i_detail import IDetail
 from src.core.interfaces.services.i_list import IList
 from src.core.interfaces.services.i_register import IRegister
+from src.core.interfaces.services.i_update import IUpdate
 from src.infrastructure.mongo import MongoDBInfrastructure
 from src.infrastructure.redis import RedisKeyDBInfrastructure
 from src.services.contact_detail import ContactDetail
 from src.services.lists_registers import ListsContacts
 from src.services.register import RegisterContact
+from src.services.update_contact import UpdateContact
 from src.services.utils.env_config import config
 
 route = APIRouter(prefix=config("ROUTERS_PREFIX"))
@@ -36,4 +38,12 @@ def contact_detail(_id: str):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     get_contact_detail_service: IDetail = ContactDetail(mongo_connection)
     contact_details = get_contact_detail_service.get_detail(_id)
+    return contact_details
+
+
+@route.post("/edit/{_id}")
+def contact_detail(_id: str, updates: ContactParameters):
+    mongo_connection = MongoDBInfrastructure.get_singleton_connection()
+    get_contact_detail_service: IUpdate = UpdateContact(mongo_connection)
+    contact_details = get_contact_detail_service.update(_id, updates)
     return contact_details

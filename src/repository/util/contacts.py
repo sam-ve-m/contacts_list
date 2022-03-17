@@ -16,8 +16,8 @@ class ContactsRepository(IMongo):
         contact = Contact(
             contactId=contact_as_json.get("_id"),
             name=Name(
-                lastName=contact_as_json.get("lastName"),
                 firstName=contact_as_json.get("firstName"),
+                lastName=contact_as_json.get("lastName"),
             ),
             email=Email(
                 email=contact_as_json.get('email')
@@ -31,19 +31,3 @@ class ContactsRepository(IMongo):
             )
         )
         return contact
-
-    @staticmethod
-    def _transform_from_contact_to_json(contact: Contact) -> dict:
-        contact_as_json = {
-            "_id": contact.contactId,
-            **ActiveCondition.ACTIVE.value,
-            "firstName": contact.name.firstName,
-            "lastName": contact.name.lastName,
-            "email": contact.email.email,
-            "address": contact.address.full_address,
-            "phones": [{
-                "type": phone.type,
-                "number": phone.number,
-            } for phone in contact.phoneList],
-        }
-        return contact_as_json
