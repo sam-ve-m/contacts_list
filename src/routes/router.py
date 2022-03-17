@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from src.core.entities.contacts_parameters import ContactParameters
+from src.core.interfaces.services.i_delete import IDelete
 from src.core.interfaces.services.i_detail import IDetail
 from src.core.interfaces.services.i_list import IList
 from src.core.interfaces.services.i_register import IRegister
@@ -8,6 +9,7 @@ from src.core.interfaces.services.i_update import IUpdate
 from src.infrastructure.mongo import MongoDBInfrastructure
 from src.infrastructure.redis import RedisKeyDBInfrastructure
 from src.services.contact_detail import ContactDetail
+from src.services.delete import DeleteContact
 from src.services.lists_registers import ListsContacts
 from src.services.register import RegisterContact
 from src.services.update_contact import UpdateContact
@@ -47,3 +49,12 @@ def contact_detail(_id: str, updates: ContactParameters):
     get_contact_detail_service: IUpdate = UpdateContact(mongo_connection)
     contact_details = get_contact_detail_service.update(_id, updates)
     return contact_details
+
+
+@route.delete("/remove/{_id}")
+def delete_contact(_id: str):
+    mongo_connection = MongoDBInfrastructure.get_singleton_connection()
+    redis_connection = RedisKeyDBInfrastructure.get_singleton_connection()
+    get_contact_delete_service: IDelete = DeleteContact(mongo_connection, redis_connection)
+    contact_deleted = get_contact_delete_service.delete(_id)
+    return contact_deleted
