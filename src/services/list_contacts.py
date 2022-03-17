@@ -25,4 +25,6 @@ class ListsContacts(IList):
                 "type": phone.type,
             } for phone in contact.phoneList]
         } for contact in list_of_contacts]
+        if not list_of_contacts_return:
+            return {'status': Status.ERROR.value}
         return {'ContactList': list_of_contacts_return, 'status': Status.SUCCESS.value}

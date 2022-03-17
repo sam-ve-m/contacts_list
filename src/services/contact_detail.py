@@ -22,6 +22,7 @@ class ContactDetail(IDetail):
             "firstName": contact_detail.name.firstName,
             "lastName": contact_detail.name.lastName,
             "email": contact_detail.email.email,
+            "address": contact_detail.address.full_address,
             "phoneList": [{
                 "number": phone.number,
                 "type": phone.type,

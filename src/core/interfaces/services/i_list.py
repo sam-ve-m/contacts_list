@@ -4,5 +4,5 @@ from typing import Any, Optional
 
 class IList(ABC):
     @abstractmethod
-    def get_list(self, optional_filter: Optional[Any]) -> dict:
+    def get_list(self, optional_filter: Optional[Any] = None) -> dict:
         pass
