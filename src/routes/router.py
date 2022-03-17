@@ -47,3 +47,12 @@ def contact_detail(_id: str, updates: ContactParameters):
     get_contact_detail_service: IUpdate = UpdateContact(mongo_connection)
     contact_details = get_contact_detail_service.update(_id, updates)
     return contact_details
+
+
+@route.get("contacts/{letter}")
+def contact_for_letter(letter: str):
+    mongo_connection = MongoDBInfrastructure.get_singleton_connection()
+    list_contact_service: IList = ListsContacts(mongo_connection)
+    filter_for_letter = {"firstName": {"$regex": f"^{letter.upper()}|^{letter.lower()}"}}
+    contacts_list_for_letter = list_contact_service.get_list(filter_for_letter)
+    return contacts_list_for_letter

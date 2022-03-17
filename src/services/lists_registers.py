@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pymongo import MongoClient
 
 from src.core.entities.contacts import Contact
@@ -12,9 +12,9 @@ class ListsContacts(IList):
     def __init__(self, infrastructure: MongoClient):
         self.infrastructure = infrastructure
 
-    def get_list(self) -> dict:
+    def get_list(self, optional_filter: Optional[dict] = {}) -> dict:
         contacts_repository = GetContactListContactsRepository(self.infrastructure)
-        list_of_contacts: List[Contact] = contacts_repository.get()
+        list_of_contacts: List[Contact] = contacts_repository.get(optional_filter)
         list_of_contacts_return = [{
             "contactId": contact.contactId,
             "firstName": contact.name.firstName,
