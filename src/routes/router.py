@@ -58,3 +58,12 @@ def delete_contact(_id: str):
     get_contact_delete_service: IDelete = DeleteContact(mongo_connection, redis_connection)
     contact_deleted = get_contact_delete_service.delete(_id)
     return contact_deleted
+
+    
+@route.get("contacts/{letter}")
+def contact_for_letter(letter: str):
+    mongo_connection = MongoDBInfrastructure.get_singleton_connection()
+    list_contact_service: IList = ListsContacts(mongo_connection)
+    filter_for_letter = {"firstName": {"$regex": f"^{letter.upper()}|^{letter.lower()}"}}
+    contacts_list_for_letter = list_contact_service.get_list(filter_for_letter)
+    return contacts_list_for_letter
