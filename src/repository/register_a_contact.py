@@ -12,7 +12,7 @@ class RegisterContactsRepository(ContactsRepository):
             "email": contact.email.email,
             "address": contact.address.full_address,
             "phones": [{
-                "type": phone.type,
+                "type": phone.type.value,
                 "number": phone.number,
             } for phone in contact.phoneList],
             **ActiveCondition.ACTIVE.value,

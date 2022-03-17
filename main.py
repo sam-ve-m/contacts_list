@@ -13,7 +13,7 @@ app = FastAPI()
 async def validation_exception_handler(request, exception):
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content=jsonable_encoder({"status": '1003'}),
+        content=jsonable_encoder({"status": '1004'}),
     )
 
 

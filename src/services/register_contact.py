@@ -5,8 +5,7 @@ from redis import Redis
 
 from src.core.entities.active import Active
 from src.core.enum.status import Status
-from src.core.entities.contacts import Contact
-from src.core.entities.contacts_parameters import ContactParameters
+from src.core.entities.contacts import Contact, ContactParameters
 from src.core.interfaces.services.i_register import IRegister
 from src.repository.register_a_contact import RegisterContactsRepository
 from src.repository.soft_deleted_registers import SoftDeleteRegisters

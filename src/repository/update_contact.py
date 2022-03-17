@@ -18,7 +18,7 @@ class UpdateContactRepository(ContactsRepository):
         Active: lambda entity_active: {"active": entity_active.is_active},
         Email: lambda entity_email: {"email": entity_email.email},
         PhoneList: lambda entity_phone_list: {"phones": [{
-            "type": phone.type,
+            "type": phone.type.value,
             "number": phone.number,
         } for phone in entity_phone_list.phoneList]},
     }

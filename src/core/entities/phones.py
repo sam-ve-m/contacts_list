@@ -2,10 +2,12 @@ from typing import List
 
 from pydantic import BaseModel, validator
 
+from src.core.enum.phone_type import PhoneType
+
 
 class Phone(BaseModel):
+    type: PhoneType
     number: int
-    type: str
 
 
 def assert_have_max_of_3(phone_list: list):

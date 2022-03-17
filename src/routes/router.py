@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-from starlette.responses import JSONResponse
 
-from src.core.entities.contacts_parameters import ContactParameters
+from src.core.entities.contacts import ContactParameters
 from src.core.interfaces.services.i_delete import IDelete
 from src.core.interfaces.services.i_detail import IDetail
 from src.core.interfaces.services.i_list import IList
@@ -10,9 +9,9 @@ from src.core.interfaces.services.i_update import IUpdate
 from src.infrastructure.mongo import MongoDBInfrastructure
 from src.infrastructure.redis import RedisKeyDBInfrastructure
 from src.services.contact_detail import ContactDetail
-from src.services.soft_delete_contact import DeleteContact
 from src.services.list_contacts import ListsContacts
 from src.services.register_contact import RegisterContact
+from src.services.soft_delete_contact import DeleteContact
 from src.services.update_contact import UpdateContact
 from src.services.utils.env_config import config
 
@@ -61,7 +60,7 @@ def delete_contact(_id: str):
     return contact_deleted
 
     
-@route.get("contacts/{letter}")
+@route.get("/contacts/{letter}")
 def contact_for_letter(letter: str):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     list_contact_service: IList = ListsContacts(mongo_connection)

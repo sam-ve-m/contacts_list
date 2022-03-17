@@ -2,7 +2,7 @@ from hashlib import md5
 
 from src.core.entities.address import Address
 from src.core.entities.contacts import Contact
-from src.core.entities.contacts_parameters import ContactParameters
+from src.core.entities.contacts import ContactParameters
 from src.core.entities.email import Email
 from src.core.entities.name import Name
 from src.core.entities.phones import Phone

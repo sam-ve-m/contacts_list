@@ -3,7 +3,7 @@ from typing import Dict, Callable, Any
 from pydantic import BaseModel
 
 from src.core.entities.address import Address
-from src.core.entities.contacts_parameters import ContactParameters
+from src.core.entities.contacts import ContactParameters
 from src.core.entities.email import Email
 from src.core.entities.name import FirstName, LastName
 from src.core.entities.phones import PhoneList, Phone

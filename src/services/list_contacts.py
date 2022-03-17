@@ -19,7 +19,7 @@ class ListsContacts(IList):
             "contactId": contact.contactId,
             "firstName": contact.name.firstName,
             "lastName": contact.name.lastName,
-            "email": contact.email,
+            "email": contact.email.email,
             "phoneList": [{
                 "number": phone.number,
                 "type": phone.type,
@@ -27,4 +27,4 @@ class ListsContacts(IList):
         } for contact in list_of_contacts]
         if not list_of_contacts_return:
             return {'status': Status.ERROR.value}
-        return {'ContactList': list_of_contacts_return, 'status': Status.SUCCESS.value}
+        return {'contactsList': list_of_contacts_return, 'status': Status.SUCCESS.value}
