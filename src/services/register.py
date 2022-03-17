@@ -1,3 +1,5 @@
+from typing import Dict, Callable
+
 from pymongo import MongoClient
 from redis import Redis
 
@@ -25,7 +27,7 @@ class RegisterContact(IRegister):
     ):
         self.mongo_infrastructure = mongo_infrastructure
         self.redis_repository = SoftDeleteRegisters(redis_infrastructure)
-        self.register_methods_if_history = {
+        self.register_methods_if_history: Dict[bool, Callable[[Contact], bool]] = {
             True: lambda contact: all((
                 self._clean_contact_history(contact),
                 self._update_contact_in_mongo(contact)
