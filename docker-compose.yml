@@ -18,6 +18,10 @@ services:
 
   contact_list_api:
     image: contact_list_api:latest
+    links:
+      - "mongodb_server:mongodb_server"
+      - "redis:redis"
+    build: .
     ports:
       - '8888:5556'
     environment:
@@ -30,7 +34,3 @@ services:
       - REDIS_PASS=102030
       - REDIS_DB=0
       - ROUTERS_PREFIX=/g3
-    build: .
-    links:
-      - "mongodb_server:mongodb_server"
-      - "redis:redis"

@@ -7,7 +7,7 @@ from src.core.enum.phone_type import PhoneType
 
 class Phone(BaseModel):
     type: PhoneType
-    number: int
+    number: str
 
 
 def assert_have_max_of_3(phone_list: list):

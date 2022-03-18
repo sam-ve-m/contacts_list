@@ -9,6 +9,7 @@ from src.core.interfaces.services.i_update import IUpdate
 from src.infrastructure.mongo import MongoDBInfrastructure
 from src.infrastructure.redis import RedisKeyDBInfrastructure
 from src.services.contact_detail import ContactDetail
+from src.services.count_contact import CountContacts
 from src.services.list_contacts import ListsContacts
 from src.services.register_contact import RegisterContact
 from src.services.soft_delete_contact import DeleteContact
@@ -35,6 +36,14 @@ def lists_contacts():
     return contacts_list
 
 
+@route.get("/count")
+def lists_contacts():
+    mongo_connection = MongoDBInfrastructure.get_singleton_connection()
+    count_contact_service: IList = CountContacts(mongo_connection)
+    contacts_list = count_contact_service.get_list()
+    return contacts_list
+
+
 @route.get("/contact/{_id}")
 def contact_detail(_id: str):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
@@ -43,7 +52,7 @@ def contact_detail(_id: str):
     return contact_details
 
 
-@route.post("/edit/{_id}")
+@route.put("/edit/{_id}")
 def contact_update(_id: str, updates: ContactParameters):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     get_contact_update_service: IUpdate = UpdateContact(mongo_connection)
