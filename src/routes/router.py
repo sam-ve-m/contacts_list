@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.core.entities.contacts import ContactParameters
+from src.core.entities.contacts import ContactParameters, ContactOptionalParameters
 from src.core.interfaces.services.i_delete import IDelete
 from src.core.interfaces.services.i_detail import IDetail
 from src.core.interfaces.services.i_list import IList
@@ -20,7 +20,7 @@ route = APIRouter(prefix=config("ROUTERS_PREFIX"))
 
 
 @route.post("/register")
-def register_contact_route(contact: ContactParameters):
+def register_contact(contact: ContactParameters):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     redis_connection = RedisKeyDBInfrastructure.get_singleton_connection()
     register_service: IRegister = RegisterContact(mongo_connection, redis_connection)
@@ -37,7 +37,7 @@ def lists_contacts():
 
 
 @route.get("/count")
-def lists_contacts():
+def lists_phones():
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     count_contact_service: IList = CountContacts(mongo_connection)
     contacts_list = count_contact_service.get_list()
@@ -53,7 +53,7 @@ def contact_detail(_id: str):
 
 
 @route.put("/edit/{_id}")
-def contact_update(_id: str, updates: ContactParameters):
+def contact_update(_id: str, updates: ContactOptionalParameters):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     get_contact_update_service: IUpdate = UpdateContact(mongo_connection)
     contact_updates = get_contact_update_service.update(_id, updates)
@@ -70,7 +70,7 @@ def delete_contact(_id: str):
 
     
 @route.get("/contacts/{letter}")
-def contact_for_letter(letter: str):
+def list_contact_by_letter(letter: str):
     mongo_connection = MongoDBInfrastructure.get_singleton_connection()
     list_contact_service: IList = ListsContacts(mongo_connection)
     filter_for_letter = {"firstName": {"$regex": f"^{letter.upper()}|^{letter.lower()}"}}
